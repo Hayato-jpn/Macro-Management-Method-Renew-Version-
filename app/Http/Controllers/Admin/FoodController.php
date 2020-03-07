@@ -18,6 +18,9 @@ class FoodController extends Controller
     public function use() {
         $user_id = Auth::id();
         $profile = Profile::where('id', $user_id)->select('id')->first();
+        if (empty($profile)) {
+            return redirect('admin/profile/create');
+        }
         return view('use', ['profile' => $profile]);
     }
     
@@ -86,6 +89,9 @@ class FoodController extends Controller
         $todayCalorie = Food::getTodayCalorie($todayProtein, $todayCarbohydrate, $todayLipid);
         $day = Food::getDay($day);
         
+        if (empty($profile)) {
+            return redirect('admin/profile/create');
+        }
         return view('admin.food.history', compact('profile', 'foods', 'day', 'todayProtein', 'todayCarbohydrate', 'todayLipid', 'todayCalorie'));
     }
     

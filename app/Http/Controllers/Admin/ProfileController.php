@@ -12,7 +12,7 @@ class ProfileController extends Controller
     //
     public function create(Request $request) {
         $user_id = Auth::id();
-        $profile = Profile::find($request->id);
+        $profile = Profile::where('id', $user_id)->first();
         if (!(empty($profile))) {
             return view('admin.profile.edit', ['profile_form' => $profile, 'user_id' => $user_id]);
         } else {
